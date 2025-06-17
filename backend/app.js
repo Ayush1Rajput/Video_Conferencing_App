@@ -4,6 +4,7 @@ import {Server} from "socket.io";
 import mongoose from "mongoose";
 import cors from "cors"
 import {connectToSocket} from './controllers/socketManager.js'
+import 'dotenv/config';
 
 const app = express();
 const server = createServer(app);
@@ -16,10 +17,9 @@ app.use(express.json({limit:"40kb"}))
 app.use(express.urlencoded({limit:"40kb",extended:true}));
 
 
-
 const start = async () => {
     app.set("mongo_user")
-    const connectionDb = await mongoose.connect("mongodb+srv://ayushraj1rajput:9412014887@cluster0.inytxk2.mongodb.net/")
+    const connectionDb = await mongoose.connect(process.env.MONGO_URL)
 
     console.log(`MONGO Connected DB HOst: ${connectionDb.connection.host}`)
     server.listen(app.get("port"), () => {
