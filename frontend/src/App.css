@@ -1,0 +1,47 @@
+.landingPageContainer{
+  width: 100vw;
+  height: 100vh;
+  background: url("https://images.pexels.com/photos/956981/milky-way-starry-sky-night-sky-star-956981.jpeg");
+  background-repeat: no-repeat;
+  background-size: cover;
+
+  color: white;
+}
+
+.landingPageContainer nav{
+  padding-inline: 1.2rem;
+  padding-block: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.landingPageContainer nav h2{
+  font-size: 1.8rem;
+  font-weight: 500;
+}
+
+.landingPageContainer nav .navlist{
+  display: flex;
+  gap: 1.6rem;
+}
+
+.landingMainContainer{
+  display: flex;
+  justify-content: space-between;
+  padding-inline: 3rem;
+  height: 80vh;
+  align-items: center;
+
+}
+
+.landingMainContainer > div:nth-child(1){
+  font-size: 1.8rem;
+
+}
+
+.landingMainContainer > div:nth-child(2) img{
+  /* margin-left: 190px; */
+  width: 42vw;
+  margin-top: 100px;
+  /* height: 90vh; */
+}
