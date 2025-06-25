@@ -22,8 +22,9 @@ export default function landing() {
             <div>
                 <h1><span style={{color:"#42aaf5"}}>Connect</span> with the World!</h1>
                 <p>Cover the distance by Zoom</p>
-                <div>
-                    <h5 style={{color:"#42aaff"}}>Get Started</h5>
+                <div role='button'>
+                    <Link to={"/auth"}>Get Started</Link>
+                    {/* <h5 style={{color:"#42aaf5"}}>Get Started</h5> */}
                 </div>
             </div>
             <div>

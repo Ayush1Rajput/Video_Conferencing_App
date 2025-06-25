@@ -39,6 +39,22 @@
 }
 
 .landingMainContainer > div:nth-child(2) img{
-  width: 42vw;
-  margin-top: 100px;
+  width: 40vw;
+  height: auto;
+  margin-top: 60px;
+}
+
+.landingMainContainer>div:nth-child(1) div[role='button'] {
+  background: #42aaf5;
+  width: fit-content;
+  padding: 0.6rem;
+  padding-bottom: 15px;
+  border-radius: 15px;
+  margin-top: 1.6rem;
+}
+
+.landingMainContainer>div:nth-child(1) div[role='button'] a {
+  text-decoration: none;
+  color: white;
+  font-size: 1.5rem;
 }
