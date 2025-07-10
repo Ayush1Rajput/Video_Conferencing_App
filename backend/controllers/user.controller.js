@@ -60,3 +60,5 @@ const register = async (req,res)=>{
         res.json({message:"Something is wrong"})
     }
 }
+
+export {login, register}
