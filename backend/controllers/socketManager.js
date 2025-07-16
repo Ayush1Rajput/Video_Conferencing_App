@@ -31,12 +31,33 @@ const connectToSocket = (server)=>{
             }
         });
 
+
         socket.on("signal",(toId,message)=>{
             io.to(toId).emit("signal",socket.id, message);
         });
 
         socket.on("chat-message",(data,sender)=>{
 
+            const [matchingRoom, found] = Object.entries(connections)
+            .reduce(([room, isFound],[roomKey, roomValue])=>{
+                if(!isFound && roomValue.includes(socket.io)){
+                    return [roomKey, true];
+                }
+
+                return [room, isFound];
+            },['',false]);
+
+            if(found===true){
+                if(messages[matchingRoom]===undefined){
+                    messages[matchingRoom]=[]
+                }
+                messages[matchingRoom].push({'sender':sender, "data":data, "socket-id-sender":socket.id})
+                console.log('message',key,":", sender, data)
+
+                connections[matchingRoom].forEach((elem) => {
+                    io.to(elem).emit("chat-message",data,sender,socket.id)
+                });
+            }
         })
 
         socket.on("disconnect",()=>{
