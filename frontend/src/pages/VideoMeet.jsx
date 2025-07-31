@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 const server_url  = "http://localhost:8000";
 
@@ -11,7 +11,51 @@ const peerConfigConnections = {
 }
 
 export default function VideoMeetComponent(){
+
+    var socketRef = useRef();
+    let socketIdRef = useRef();
+
+    let localVideoref = useRef();
+
+    let [videoAvailable, setVideoAvailable] = useState(true);
+
+    let [audioAvailable, setAudioAvailable] = useState(true);
+
+    let [video, setVideo] = useState([]);
+
+    let [audio, setAudio] = useState();
+
+    let [screen, setScreen] = useState();
+
+    let [showModal, setModal] = useState(true);
+
+    let [screenAvailable, setScreenAvailable] = useState();
+
+    let [messages, setMessages] = useState([])
+
+    let [message, setMessage] = useState("");
+
+    let [newMessages, setNewMessages] = useState(3);
+
+    let [askForUsername, setAskForUsername] = useState(true);
+
+    let [username, setUsername] = useState("");
+
+    const videoRef = useRef([])
+
+    let [videos, setVideos] = useState([])
+
     return (
-        <div>VideoMeet Components</div>
+        <div>
+            
+            {askForUsername===true ?
+            <div>
+                <h2>Enter into Lobby</h2>
+
+            </div> :
+            <></>
+        }
+            
+        </div>
     )
 }
