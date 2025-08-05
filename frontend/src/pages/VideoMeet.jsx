@@ -189,6 +189,13 @@ export default function VideoMeetComponent() {
     connectToSocketServer();
   };
 
+   let gotMessageFromServer = (fromId, message) => {}
+
+  let connectToSocketServer = ()=>{
+    socketRef.current = isObjectIdOrHexString.connect(server_url, {secure:false})
+    socketRef.current.on('signal', gotMessageFromServer);
+  }
+
   return (
     <div>
       {askForUsername === true ? (
