@@ -192,8 +192,32 @@ export default function VideoMeetComponent() {
    let gotMessageFromServer = (fromId, message) => {}
 
   let connectToSocketServer = ()=>{
-    socketRef.current = isObjectIdOrHexString.connect(server_url, {secure:false})
+    
+    socketRef.current = io.connect(server_url, {secure:false})
+
     socketRef.current.on('signal', gotMessageFromServer);
+    
+    socketRef.current.on("connect",()=>{
+      socketRef.current.emit("join-call", window.location.href)
+      socketIdRef.current = socketRef.current.id;
+      socketRef.current.on('chat-message', addMessage)
+
+      socketRef.current.on("user-left", (id)=>{
+        setVideo((videos)=>{
+          videos.filter((video)=>{
+            video.socketId !== id
+          })
+        })
+      })
+
+      socketRef.current.on("user-joined", (id, clients)=>{
+        clients.forEach((socketListId)=>{
+          connections[socketListId] = new RTCPeerConnection(peerConfigConnections)
+        })
+      })
+
+    })
+
   }
 
   return (
