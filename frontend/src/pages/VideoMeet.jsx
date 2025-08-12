@@ -171,7 +171,15 @@ export default function VideoMeetComponent() {
     oscillator.start();
     ctx.resume()
     return Object.assign(dst.stream.getAudioTrack()[0], {enabled: false})
-    
+
+  }
+
+  let black = ({ width = 640, height = 480} ={})=>{
+    let canvas = Object.assign(document.createElement("canvas"), {width,height});
+
+    canvas.getContext('2d').fillRect(0,0,width,height);
+    let stream = canvas.captureStream();
+    return Object.assign(stream.getVideoTracks()[0],{enabled:false})
   }
 
   let getUserMedia = () => {
@@ -292,6 +300,9 @@ export default function VideoMeetComponent() {
 
           }else{
             // blackSlience 
+            let blackSilence = (... args)=> new MediaStream([black(... args),silence()])
+            window.localStream = blackSilence();
+            connections[socketListId].addStream(window.localStream);
           }
 
         });
