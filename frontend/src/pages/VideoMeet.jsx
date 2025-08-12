@@ -162,6 +162,18 @@ export default function VideoMeetComponent() {
     );
   };
 
+  let silence = ()=>{
+    let ctx = new AudioContext()
+    let oscillator = ctx.createOscillator();
+
+    let dst = oscillator.connect(ctx.createMediaStreamDestination());
+
+    oscillator.start();
+    ctx.resume()
+    return Object.assign(dst.stream.getAudioTrack()[0], {enabled: false})
+    
+  }
+
   let getUserMedia = () => {
     if ((video && videoAvailable) || (audio && audioAvailable)) {
       navigator.mediaDevices
