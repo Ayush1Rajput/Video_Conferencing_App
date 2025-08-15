@@ -1,4 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
+import io from "socket.io-client"
+import {TextField} from "@mui/material"
+import {Button} from "@mui/material";
 
 const server_url = "http://localhost:8000";
 
@@ -375,7 +378,7 @@ export default function VideoMeetComponent() {
         </div>
       ) : (
         <div className="meetVideoContainer">
-          <video ref={localVideoref} autoPlay muted></video>
+          <video className="meetUserVideo" ref={localVideoref} autoPlay muted></video>
 
           {videos.map((video) => (
             <div key={video.socketId}>
