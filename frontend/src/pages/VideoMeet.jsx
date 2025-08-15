@@ -3,6 +3,8 @@ import io from "socket.io-client"
 import {TextField} from "@mui/material"
 import {Button} from "@mui/material";
 
+import styles from "../styles/videoComponent.module.css";
+
 const server_url = "http://localhost:8000";
 
 var connections = {};
@@ -377,8 +379,8 @@ export default function VideoMeetComponent() {
           </div>
         </div>
       ) : (
-        <div className="meetVideoContainer">
-          <video className="meetUserVideo" ref={localVideoref} autoPlay muted></video>
+        <div className={styles.meetVideoContainer}>
+          <video className={styles.meetUserVideo} ref={localVideoref} autoPlay muted></video>
 
           {videos.map((video) => (
             <div key={video.socketId}>
