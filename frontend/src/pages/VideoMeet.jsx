@@ -1,7 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
-import io from "socket.io-client"
-import {TextField} from "@mui/material"
-import {Button} from "@mui/material";
+import io from "socket.io-client";
+import { IconButton, TextField } from "@mui/material";
+import { Button } from "@mui/material";
+import VideocamIcon from "@mui/icons-material/Videocam";
+import VideocamOffIcon from "@mui/icons-material/VideocamOff";
+import CallEndIcon from "@mui/icons-material/CallEnd";
+import MicIcon from "@mui/icons-material/Mic";
+import MicOffIcon from "@mui/icons-material/MicOff";
+import ScreenShareIcon from "@mui/icons-material/ScreenShare";
+import StopScreenShareIcon from "@mui/icons-material/StopScreenShare";
 
 import styles from "../styles/videoComponent.module.css";
 
@@ -380,10 +387,41 @@ export default function VideoMeetComponent() {
         </div>
       ) : (
         <div className={styles.meetVideoContainer}>
-          <video className={styles.meetUserVideo} ref={localVideoref} autoPlay muted></video>
+          <div className={styles.buttonContainers}>
+            <IconButton onClick={handleVideo} style={{ color: "white" }}>
+              {video === true ? <VideocamIcon /> : <VideocamOffIcon />}
+            </IconButton>
+            <IconButton onClick={handleEndCall} style={{ color: "red" }}>
+              <CallEndIcon />
+            </IconButton>
+            <IconButton onClick={handleAudio} style={{ color: "white" }}>
+              {audio === true ? <MicIcon /> : <MicOffIcon />}
+            </IconButton>
+
+            {screenAvailable === true ? (
+              <IconButton onClick={handleScreen} style={{ color: "white" }}>
+                {screen === true ? (
+                  <ScreenShareIcon />
+                ) : (
+                  <StopScreenShareIcon />
+                )}
+              </IconButton>
+            ) : (
+              <></>
+            )}
+
+            
+          </div>
+
+          <video
+            className={styles.meetUserVideo}
+            ref={localVideoref}
+            autoPlay
+            muted
+          ></video>
 
           {videos.map((video) => (
-            <div key={video.socketId}>
+            <div className={styles.conferenceView} key={video.socketId}>
               <h2>{video.socketId}</h2>
 
               <video
