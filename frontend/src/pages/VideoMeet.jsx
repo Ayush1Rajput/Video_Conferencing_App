@@ -365,6 +365,19 @@ export default function VideoMeetComponent() {
     });
   };
 
+  let connect = () =>{
+    setAskForUsername(false);
+    getMedia();
+  }
+
+  let handleVideo = ()=>{
+    setVideo(!video);
+  };
+
+  let handleAudio = ()=>{
+    setAudio(!audio);
+  }
+
   return (
     <div>
       {askForUsername === true ? (
@@ -410,7 +423,14 @@ export default function VideoMeetComponent() {
               <></>
             )}
 
-            
+            <Badge badgeContent={newMessages} max={999} color="orange">
+              <IconButton
+                onClick={() => setModal(!showModal)}
+                style={{ color: "white" }}
+              >
+                <ChatIcon />{" "}
+              </IconButton>
+            </Badge>
           </div>
 
           <video
