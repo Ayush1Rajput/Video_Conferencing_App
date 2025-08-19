@@ -378,27 +378,31 @@ export default function VideoMeetComponent() {
     setAudio(!audio);
   };
 
-  let getDisplayMediaSuccess = (stream)=>{
+  let getDisplayMediaSuccess = (stream) => {
     try {
-      window.localStream.getTracks().forEach(track=>track.stop());
+      window.localStream.getTracks().forEach((track) => track.stop());
     } catch (e) {
       console.log(e);
     }
     window.localStream = stream;
     localVideoref.current.srcObject = stream;
 
-    for(let id in connections){
-      if(id===socketIdRef.current) continue;
+    for (let id in connections) {
+      if (id === socketIdRef.current) continue;
 
       connections[id].addStream(window.localStream);
-      connections[id].createOffer().then((description)=>{
-        connections[id].setLocalDescription(description)
-        .then(()=>{
-          socketRef.current.emit("signal",id, JSON>stringify({"sdp":connections[id].localDescription}))
-        })
-        .catch(e => console.log(e)
-        )
-      })
+      connections[id].createOffer().then((description) => {
+        connections[id]
+          .setLocalDescription(description)
+          .then(() => {
+            socketRef.current.emit(
+              "signal",
+              id,
+              JSON > stringify({ sdp: connections[id].localDescription })
+            );
+          })
+          .catch((e) => console.log(e));
+      });
     }
 
     stream.getTracks().forEach(
@@ -420,28 +424,29 @@ export default function VideoMeetComponent() {
           getUserMedia();
         })
     );
-  }
+  };
 
-  let getDisplayMedia = () =>{
-    if(screen){
-      if(navigator.mediaDevices.getDisplayMedia){
-        navigator.mediaDevices.getDisplayMedia({video:true, audio:true})
-        .then(getDisplayMediaSuccess)
-        .then((stream)=>{ })
-        .catch((e)=> console.log(e))
+  let getDisplayMedia = () => {
+    if (screen) {
+      if (navigator.mediaDevices.getDisplayMedia) {
+        navigator.mediaDevices
+          .getDisplayMedia({ video: true, audio: true })
+          .then(getDisplayMediaSuccess)
+          .then((stream) => {})
+          .catch((e) => console.log(e));
       }
     }
-  }
+  };
 
-  useEffect(()=>{
-    if(screen!==undefined){
+  useEffect(() => {
+    if (screen !== undefined) {
       getDisplayMedia();
     }
-  },[screen]);
+  }, [screen]);
 
-  let handleScreen = () =>{
+  let handleScreen = () => {
     setScreen(!screen);
-  }
+  };
 
   return (
     <div>
@@ -465,11 +470,13 @@ export default function VideoMeetComponent() {
         </div>
       ) : (
         <div className={styles.meetVideoContainer}>
-
-          <div className={styles.chatRoom}>
-            <h1>Chat</h1>
-          </div>
-
+          {showModal ? (
+            <div className={styles.chatRoom}>
+              <h1>Chat</h1>
+            </div>
+          ) : (
+            <></>
+          )}
           <div className={styles.buttonContainers}>
             <IconButton onClick={handleVideo} style={{ color: "white" }}>
               {video === true ? <VideocamIcon /> : <VideocamOffIcon />}
