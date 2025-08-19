@@ -365,18 +365,18 @@ export default function VideoMeetComponent() {
     });
   };
 
-  let connect = () =>{
+  let connect = () => {
     setAskForUsername(false);
     getMedia();
-  }
+  };
 
-  let handleVideo = ()=>{
+  let handleVideo = () => {
     setVideo(!video);
   };
 
-  let handleAudio = ()=>{
+  let handleAudio = () => {
     setAudio(!audio);
-  }
+  };
 
   return (
     <div>
@@ -442,8 +442,6 @@ export default function VideoMeetComponent() {
 
           {videos.map((video) => (
             <div className={styles.conferenceView} key={video.socketId}>
-              <h2>{video.socketId}</h2>
-
               <video
                 data-socket={video.socketId}
                 ref={(ref) => {

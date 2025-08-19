@@ -1,7 +1,7 @@
 .meetVideoContainer {
     position: relative;
     height: 100vh;
-    background: #00043b;
+    background: #010430;
 }
 
 .meetUserVideo {
@@ -22,4 +22,17 @@
 
 .buttonContainers svg {
     font-size: 3rem;
+}
+
+.conferenceView { 
+    display: flex;
+    padding: 10px;
+    gap: 10px;
+}
+
+.conferenceView  video {
+    width: 40vw;
+    height: 20vh;
+    min-width: 30vw;
+    border-radius: 10px;
 }
