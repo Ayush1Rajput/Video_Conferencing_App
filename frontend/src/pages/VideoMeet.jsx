@@ -448,6 +448,12 @@ export default function VideoMeetComponent() {
     setScreen(!screen);
   };
 
+
+  let sendMessage = ()=>{
+    socketRef.current.emit("chat-message", message,username);
+    setMessage("");
+  }
+
   return (
     <div>
       {askForUsername === true ? (
