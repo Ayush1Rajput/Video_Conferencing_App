@@ -463,6 +463,14 @@ export default function VideoMeetComponent() {
     setMessage("");
   };
 
+  let handleEndCall = () => {
+    try {
+      let tracks = localVideoref.current.srcObject.getTracks();
+      tracks.forEach((track) => track.stop());
+    } catch (e) {}
+    window.location.href = "/";
+  };
+
   return (
     <div>
       {askForUsername === true ? (
