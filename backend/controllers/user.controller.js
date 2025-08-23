@@ -63,5 +63,17 @@ const register = async (req, res) => {
   }
 };
 
+const getUserHistory = async(req,res)=>{
+  const {token} = req.query;
+
+  try{
+    const user = await User.findOne({token});
+    const meetings = await meetings.find({user_id : user.username});
+    res.json(meetings)
+  }catch(e){
+    res.json({message:`Something went wrong ${e}`});
+  }
+}
+
 
 export { login, register}
