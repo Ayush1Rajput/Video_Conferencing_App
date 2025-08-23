@@ -60,3 +60,12 @@
   font-size: 1.5rem;
   padding-inline: 10px;
 }
+
+.navBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-inline: 20px;
+  text-align: center;
+
+}
