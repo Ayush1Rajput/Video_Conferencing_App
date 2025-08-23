@@ -11,8 +11,6 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { AuthContext } from "../contexts/AuthContext";
 import { Snackbar } from "@mui/material";
 
-
-
 const defaultTheme = createTheme();
 
 export default function Authentication() {
@@ -45,7 +43,10 @@ export default function Authentication() {
       }
     } catch (err) {
       console.log(err);
-      let message = err.response.data.message;
+      let message =
+        err?.response?.data?.message ||
+        err?.message ||
+        "Something went wrong. Please try again.";
       setError(message);
     }
   };

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import io from "socket.io-client";
-import { IconButton, TextField } from "@mui/material";
+import { Badge, IconButton, TextField } from "@mui/material";
 import { Button } from "@mui/material";
 import VideocamIcon from "@mui/icons-material/Videocam";
 import VideocamOffIcon from "@mui/icons-material/VideocamOff";
@@ -9,6 +9,7 @@ import MicIcon from "@mui/icons-material/Mic";
 import MicOffIcon from "@mui/icons-material/MicOff";
 import ScreenShareIcon from "@mui/icons-material/ScreenShare";
 import StopScreenShareIcon from "@mui/icons-material/StopScreenShare";
+import ChatIcon from "@mui/icons-material/Chat";
 
 import styles from "../styles/videoComponent.module.css";
 
@@ -270,14 +271,11 @@ export default function VideoMeetComponent() {
     socketRef.current.on("connect", () => {
       socketRef.current.emit("join-call", window.location.href);
       socketIdRef.current = socketRef.current.id;
+
       socketRef.current.on("chat-message", addMessage);
 
       socketRef.current.on("user-left", (id) => {
-        setVideo((videos) => {
-          videos.filter((video) => {
-            video.socketId !== id;
-          });
-        });
+        setVideos((videos) => videos.filter((video) => video.socketId !== id));
       });
 
       socketRef.current.on("user-joined", (id, clients) => {
@@ -285,8 +283,8 @@ export default function VideoMeetComponent() {
           connections[socketListId] = new RTCPeerConnection(
             peerConfigConnections
           );
-
-          connections[socketListId].onicecandidate = (event) => {
+          // Wait for their ice candidate
+          connections[socketListId].onicecandidate = function (event) {
             if (event.candidate != null) {
               socketRef.current.emit(
                 "signal",
@@ -296,27 +294,35 @@ export default function VideoMeetComponent() {
             }
           };
 
+          // Wait for their video stream
           connections[socketListId].onaddstream = (event) => {
-            let videoExists = videoRef.current.find((video) => {
-              video.socketId === socketListId;
-            });
+            console.log("BEFORE:", videoRef.current);
+            console.log("FINDING ID: ", socketListId);
+
+            let videoExists = videoRef.current.find(
+              (video) => video.socketId === socketListId
+            );
 
             if (videoExists) {
-              setVideo((video) => {
-                const updatedVideos = video.map((video) => {
+              console.log("FOUND EXISTING");
+
+              // Update the stream of the existing video
+              setVideos((videos) => {
+                const updatedVideos = videos.map((video) =>
                   video.socketId === socketListId
                     ? { ...video, stream: event.stream }
-                    : video;
-                });
-
+                    : video
+                );
                 videoRef.current = updatedVideos;
                 return updatedVideos;
               });
             } else {
+              // Create a new video
+              console.log("CREATING NEW");
               let newVideo = {
                 socketId: socketListId,
                 stream: event.stream,
-                autoPlay: true,
+                autoplay: true,
                 playsinline: true,
               };
 
@@ -328,10 +334,10 @@ export default function VideoMeetComponent() {
             }
           };
 
+          // Add the local video stream
           if (window.localStream !== undefined && window.localStream !== null) {
             connections[socketListId].addStream(window.localStream);
           } else {
-            // blackSlience
             let blackSilence = (...args) =>
               new MediaStream([black(...args), silence()]);
             window.localStream = blackSilence();
@@ -398,7 +404,7 @@ export default function VideoMeetComponent() {
             socketRef.current.emit(
               "signal",
               id,
-              JSON > stringify({ sdp: connections[id].localDescription })
+              JSON.stringify({ sdp: connections[id].localDescription })
             );
           })
           .catch((e) => console.log(e));
