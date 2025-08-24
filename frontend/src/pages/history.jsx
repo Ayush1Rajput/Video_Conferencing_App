@@ -1,6 +1,8 @@
 import React, { useContext } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 
+import Card from '@mui/material/Card';
+
 export default function history() {
   const { getHistoryOfUser } = useContext(AuthContext);
 
@@ -19,7 +21,17 @@ export default function history() {
     fetchHistory();
   }, []);
 
-  return <div>
+  return (<div>
+    {
+        meetings.map(e=>{
+            return(
+                <>
+                 <Card key={i} variant="outlined">
 
-  </div>;
+                 </Card>
+                 </>
+            )
+        })
+    }
+  </div>);
 }
