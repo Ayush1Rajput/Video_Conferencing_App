@@ -118,3 +118,25 @@ html {
   z-index: 1;
   box-shadow: 0 3px 10px var(--button-shadow);
 }
+
+form input {
+  width: 100%;
+  padding: 0.9rem 1.1rem;
+  margin: 0.6rem 0;
+  border: none;
+  border-radius: 14px;
+  background: var(--input-bg);
+  color: var(--text-color);
+  font-size: 1rem;
+  outline: none;
+  transition: background 0.3s ease, color 0.3s ease;
+  box-sizing: border-box;
+}
+
+form input::placeholder {
+  color: var(--input-placeholder);
+}
+
+form input:focus {
+  background: rgba(255 255 255 / 0.2);
+}
