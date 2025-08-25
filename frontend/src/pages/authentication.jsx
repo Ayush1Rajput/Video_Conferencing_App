@@ -37,6 +37,10 @@ export default function Authentication() {
     <div className="auth-container fancy">
       <div className="auth-card fancy-card">
         <div className="toggle-wrapper">
+          <div
+            className="toggle-highlight"
+            style={{ left: formState === 0 ? "0%" : "50%" }}
+          />
           <button
             className={formState === 0 ? "active" : ""}
             onClick={() => setFormState(0)}
