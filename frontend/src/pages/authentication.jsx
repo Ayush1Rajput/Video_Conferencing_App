@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import { AuthContext } from "../contexts/AuthContext";
-import './AuthStyles.css'
+import "./AuthStyles.css";
 
 export default function Authentication() {
   const [username, setUsername] = useState("");
@@ -27,13 +27,15 @@ export default function Authentication() {
         setFormState(0);
       }
     } catch (err) {
-      setError(err?.response?.data?.message || err?.message || "Something went wrong.");
+      setError(
+        err?.response?.data?.message || err?.message || "Something went wrong."
+      );
     }
   };
 
   return (
-    <div className="auth-container">
-      <div className="auth-card">
+    <div className="auth-container fancy">
+      <div className="auth-card fancy-card">
         <div className="toggle-wrapper">
           <button
             className={formState === 0 ? "active" : ""}
@@ -49,7 +51,9 @@ export default function Authentication() {
           </button>
         </div>
 
-        <h2>{formState === 0 ? "Sign in to your account" : "Create a new account"}</h2>
+        <h2>
+          {formState === 0 ? "Sign in to your account" : "Create a new account"}
+        </h2>
 
         <form
           onSubmit={(e) => {
