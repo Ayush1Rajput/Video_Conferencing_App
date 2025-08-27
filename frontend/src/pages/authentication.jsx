@@ -45,7 +45,7 @@ export default function Authentication() {
   };
 
   return (
-    <div className="auth-container fancy">
+    <div className={`auth-container fancy ${darkMode ? "dark" : "light"}`}>
       <div className="auth-card fancy-card">
         <div className="mode-toggle">
           <input
