@@ -10,6 +10,7 @@ export default function Authentication() {
   const [message, setMessage] = useState("");
   const [formState, setFormState] = useState(0); // 0 = login, 1 = register
   const [darkMode, setDarkMode] = useState(true); // Default to dark mode
+  const [loading, setLoading] = useState(false);
 
   const { handleRegister, handleLogin } = useContext(AuthContext);
 
@@ -26,6 +27,7 @@ export default function Authentication() {
   const handleAuth = async () => {
     setError("");
     setMessage("");
+    setLoading(true); // START loading
     try {
       if (formState === 0) {
         await handleLogin(username, password);
@@ -41,6 +43,8 @@ export default function Authentication() {
       setError(
         err?.response?.data?.message || err?.message || "Something went wrong."
       );
+    } finally {
+      setLoading(false); // END loading
     }
   };
 
@@ -97,28 +101,37 @@ export default function Authentication() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
+              disabled={loading}
             />
           )}
+
           <input
             type="text"
             placeholder="Username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
+            disabled={loading}
           />
+
           <input
             type="password"
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
+            disabled={loading}
           />
 
           {error && <p className="error">{error}</p>}
           {message && <p className="success">{message}</p>}
 
-          <button type="submit" className="submit-btn">
-            {formState === 0 ? "Login" : "Register"}
+          <button type="submit" className="submit-btn" disabled={loading}>
+            {loading
+              ? "Please wait..."
+              : formState === 0
+              ? "Login"
+              : "Register"}
           </button>
         </form>
       </div>
