@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import withAuth from "../utils/withAuth";
 import { useNavigate } from "react-router-dom";
-import "../App.css";
+import "../styles/HomeComponent.css";
 import { Button, IconButton, TextField } from "@mui/material";
 import RestoreIcon from "@mui/icons-material/Restore";
 import { AuthContext } from "../contexts/AuthContext";
@@ -63,7 +63,7 @@ function HomeComponent() {
           </div>
         </div>
         <div className="rightPanel">
-          <img srcSet="/logo3.png" alt="" />
+          <img srcSet="/logo3.svg" alt="" />
         </div>
       </div>
     </>
