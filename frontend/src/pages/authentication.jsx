@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { AuthContext } from "../contexts/AuthContext";
 import "./AuthStyles.css";
 
@@ -9,8 +9,19 @@ export default function Authentication() {
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
   const [formState, setFormState] = useState(0); // 0 = login, 1 = register
+  const [darkMode, setDarkMode] = useState(true); // Default to dark mode
 
   const { handleRegister, handleLogin } = useContext(AuthContext);
+
+  useEffect(() => {
+    if (darkMode) {
+      document.documentElement.classList.add("dark");
+      document.documentElement.classList.remove("light");
+    } else {
+      document.documentElement.classList.add("light");
+      document.documentElement.classList.remove("dark");
+    }
+  }, [darkMode]);
 
   const handleAuth = async () => {
     setError("");
@@ -36,6 +47,20 @@ export default function Authentication() {
   return (
     <div className="auth-container fancy">
       <div className="auth-card fancy-card">
+        <div className="mode-toggle">
+          <input
+            type="checkbox"
+            id="mode-switch"
+            checked={darkMode}
+            onChange={() => setDarkMode(!darkMode)}
+          />
+          <label htmlFor="mode-switch" className="toggle-label">
+            <span className="sun">☀️</span>
+            <span className="moon">🌙</span>
+            <div className="toggle-ball"></div>
+          </label>
+        </div>
+
         <div className="toggle-wrapper">
           <div
             className="toggle-highlight"
