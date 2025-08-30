@@ -18,15 +18,20 @@ export default function Landing() {
           <h2>Zoom Clone</h2>
         </div>
         <div className={`navlist ${isMenuOpen ? "open" : ""}`}>
-          <p>Join as Guest</p>
-          <p>Register</p>
-          <div role="button">
+          <Link to="/guest">
+            <p>Join as Guest</p>
+          </Link>
+          <Link to="/auth">
+            <p>Register</p>
+          </Link>
+
+          <Link to="/auth">
             <p>Login</p>
-          </div>
+          </Link>
         </div>
 
         {/* Hamburger Menu Icon */}
-        <div className="hamburger"  onClick={toggleMenu}>
+        <div className="hamburger" onClick={toggleMenu}>
           <div className="bar"></div>
           <div className="bar"></div>
           <div className="bar"></div>
