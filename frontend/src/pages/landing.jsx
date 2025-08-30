@@ -1,10 +1,10 @@
 import React from "react";
-import "../App.css";
+import "../styles/LandingPage.css";
 import { Link } from "react-router-dom";
 
 export default function landing() {
   return (
-    <div className="landingPageContainer">
+    <div className="landingPageContainer" >
       <nav>
         <div className="navHeader">
           <h2>Zoom Clone</h2>
